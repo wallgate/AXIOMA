@@ -8,6 +8,33 @@ use \Doctrine\ORM\EntityManager,
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
+    /**
+     * Настройка представления
+     * @return \Zend_View
+     */
+    protected function _initView() {
+        $this->bootstrap('layout');
+        $layout = $this->getResource('layout');
+
+        $options = $this->getOptions();
+
+        $view = $layout->getView();
+        $viewOptions = $options['resources']['view'];
+        $view->doctype($viewOptions['doctype']);
+        $view->headTitle($viewOptions['title']);
+        $view->headMeta()->setHttpEquiv('Content-Type', $viewOptions['contentType'] . '; charset=' . $viewOptions['encoding']);
+        // основная таблица стилей
+        $view->headLink()->appendStylesheet('/public/css/main.css');
+        // помощники представления - путь и пространство имён
+        $view->addHelperPath('Axioma/View/Helper', 'Axioma\View\Helper\\');
+
+        return $view;
+    }
+
+    /**
+     * Настройка взаимодействия с Doctrine
+     * @return EntityManager
+     */
     protected function _initDoctrine() {
         require_once 'Doctrine/Common/ClassLoader.php';
 
