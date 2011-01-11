@@ -1,0 +1,12 @@
+<h1>Ошибка</h1>
+<h2><?php echo $this->message ?></h2>
+
+<?php if (isset($this->exception)): ?>
+    <p><?php echo $this->exception->getMessage() ?></p>
+
+    <h3>Стек вызовов:</h3>
+    <pre><?php echo $this->exception->getTraceAsString() ?></pre>
+
+    <h3>Параметры запроса:</h3>
+    <pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+<?php endif ?>
