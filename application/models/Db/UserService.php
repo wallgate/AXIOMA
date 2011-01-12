@@ -3,7 +3,8 @@
 namespace Db;
 
 use Axioma\Db\BaseService,
-    Axioma\Db\AuthServiceInterface;
+    Axioma\Db\AuthServiceInterface,
+    Doctrine\Common\EventManager;
 
 /**
  * Сервис для модели пользователя
@@ -49,7 +50,13 @@ class UserService extends BaseService implements AuthServiceInterface {
     public function authenticate($login, $password) {
         $user = $this->getByLogin($login);
         if ($user instanceof Entity\User)
-            if ($user->password == $password && $user->isActive()) /** @todo шифровать пароль */
+            if ($user->password == $password && $user->isActive()) { /** @todo шифровать пароль */
+                // обработка события логина
+                $evm = new EventManager();
+                $evm->addEventListener(array('postAuthenticate'), $user);
+                $evm->dispatchEvent('postAuthenticate');
+
                 return $user;
+            }
     }
 }

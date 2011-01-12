@@ -32,6 +32,7 @@ class UsersTest extends ControllerTestCase {
     public function testAuthenticateSuccessful() {
         $user = $this->userService->authenticate('admin', 'root');
         $this->assertInstanceOf('\Db\Entity\User', $user);
+        $this->assertNotNull($user->last_login_at);
     }
 
     public function testAuthenticateWrongPassword() {

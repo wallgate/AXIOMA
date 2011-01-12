@@ -47,6 +47,8 @@ class User extends BaseEntity {
     protected $avatar;
     /** @Column(length="200", nullable=true) */
     protected $summary;
+    /** @Column(type="richdate", nullable=true) */
+    protected $last_login_at;
     /** @Column(type="richdate") */
     protected $created_at;
 
@@ -199,5 +201,20 @@ class User extends BaseEntity {
     /** @PrePersist */
     public function markCreationTime() {
         $this->created_at = new Date();
+    }
+
+    public function getLast_login_at() {
+        return $this->last_login_at;
+    }
+
+    public function setLast_login_at($last_login_at) {
+        if ($last_login_at instanceof \Zend_Date)
+            $this->last_login_at = $last_login_at;
+        else
+            $this->last_login_at = new \Zend_Date($last_login_at);
+    }
+
+    public function postAuthenticate(\Doctrine\Common\EventArgs $args) {
+        $this->last_login_at = new \Zend_Date();
     }
 }
