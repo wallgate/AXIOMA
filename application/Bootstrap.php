@@ -73,6 +73,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'charset'       => 'UTF8',
             'driverOptions' => array('charset' => 'UTF8')
         );
+
+        // регистрируем тип данных richdate (маппинг datetime в Axioma\Date)
+        if (!Type::hasType(\Axioma\Db\Datatype\RichDate::TYPE_NAME))
+            Type::addType(\Axioma\Db\Datatype\RichDate::TYPE_NAME, '\Axioma\Db\Datatype\RichDate');
+
         $em = EntityManager::create($connectionOptions, $config);
 
         // EntityManager сохраняем в реестре, чтобы иметь доступ к нему в любой точке приложения
