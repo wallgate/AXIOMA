@@ -2,13 +2,14 @@
 
 namespace Db;
 
-use Axioma\Db\BaseService;
+use Axioma\Db\BaseService,
+    Axioma\Db\AuthServiceInterface;
 
 /**
  * Сервис для модели пользователя
  */
-class UserService extends BaseService {
-    
+class UserService extends BaseService implements AuthServiceInterface {
+
     const ENTITY_NAME = '\Db\Entity\User'; // имя сущности Doctrine2, с которой работает сервис
 
     /**
@@ -36,5 +37,19 @@ class UserService extends BaseService {
         return $this->entityManager
             ->getRepository(self::ENTITY_NAME)
             ->findOneByLogin($login);
+    }
+    
+    /**
+     * Аутентификация пользователя по логину и паролю
+     *
+     * @param string $login логин
+     * @param string $password пароль
+     * @return User
+     */
+    public function authenticate($login, $password) {
+        $user = $this->getByLogin($login);
+        if ($user instanceof Entity\User)
+            if ($user->password == $password && $user->isActive()) /** @todo шифровать пароль */
+                return $user;
     }
 }

@@ -17,10 +17,18 @@ class User extends BaseEntity {
     protected $login;
     /** @Column(length=50) */
     protected $password;
+    /** @Column(type="boolean") */
+    protected $active;
     /** @Column(length=50) */
     protected $firstname;
     /** @Column(length=50) */
     protected $lastname;
+
+    function __construct() {
+        // значение по умолчанию для вновь созданных пользователей
+        $this->active = false;
+    }
+
 
     public function getLogin() {
         return $this->login;
@@ -36,6 +44,14 @@ class User extends BaseEntity {
 
     public function setPassword($password) {
         $this->password = $password;
+    }
+
+    public function isActive() {
+        return $this->active;
+    }
+
+    public function makeActive($active = true) {
+        $this->active = $active;
     }
 
     public function getFirstname() {
