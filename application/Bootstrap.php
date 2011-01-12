@@ -92,4 +92,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             new Zend_Controller_Router_Route('/logout', array('controller'=>'login', 'action'=>'logout'))
         );
     }
+
+    /**
+     * Регистрация плагинов фронт-контроллера
+     */
+    protected function _initPlugins() {
+        $front = Zend_Controller_Front::getInstance();
+
+        // плагин, закрывающий систему неаутентифицированному пользователю
+        $aclPlugin = new Axioma\Controller\Plugin\Acl();
+        $aclPlugin->setExceptions(array('login')); // должен работать везде, кроме контроллера LoginController
+        $front->registerPlugin($aclPlugin);
+    }
 }
