@@ -80,4 +80,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         return $em;
     }
+
+    /**
+     * Настройка маршрутизатора
+     */
+    protected function _initRouter() {
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+    }
 }
