@@ -36,7 +36,7 @@ abstract class Base extends \Zend_Form {
     /**
      * Обработка формы - проверка входных данных на валидность и их обработка
      *
-     * @throws Exception
+     * @throws Axioma\Exception
      */
     abstract public function process();
 }

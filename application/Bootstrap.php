@@ -86,5 +86,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      */
     protected function _initRouter() {
         $router = Zend_Controller_Front::getInstance()->getRouter();
+
+        // маршрут на логаут
+        $router->addRoute('logout',
+            new Zend_Controller_Router_Route('/logout', array('controller'=>'login', 'action'=>'logout'))
+        );
     }
 }

@@ -22,9 +22,7 @@ class Login extends Base implements AuthInterface {
      */
     protected $adapter;
 
-
-
-    public function build($data = array()) {
+    protected function build($data = array()) {
         $login = new \Zend_Form_Element_Text('login');
         $login->setLabel('Логин')
               ->setRequired();
