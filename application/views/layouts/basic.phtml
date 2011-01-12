@@ -3,10 +3,25 @@
     <head>
         <?= $this->headMeta() ?>
         <?= $this->headLink() ?>
-        <?= $this->headTitle() ?>
+        <?= $this->headTitle()->setSeparator(' | ') ?>
     </head>
 
     <body>
-        <?= $this->layout()->content ?>
+        <div class="wrapper">
+            <div class="header">
+                <h1>AXIOMA</h1>
+                <div class="idArea">
+                    <img src="<?= $this->identity()->avatar ? $this->identity()->avatar : 'public/img/defaultavatar.jpg' ?>" />
+                    <p><?= $this->identity()->firstname ?></p>
+                    <small><a href="/profile">профиль</a> | <a href="/logout">выход</a></small>
+                </div>
+            </div>
+            <div class="main">
+                <div class="content">
+                    <h1><?= $this->pageHeader ?></h1>
+                    <?= $this->layout()->content ?>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
