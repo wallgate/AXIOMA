@@ -25,6 +25,7 @@ class LoginController extends Zend_Controller_Action {
                 $form->populate($this->getRequest()->getParams());
                 $form->process();
                 // если ошибки до сих пор не возникло, то мы успешно авторизовались
+                setcookie('auth_id', Zend_Auth::getInstance()->getIdentity()->id, time()+60*60*6); /** @todo хранить, конечно, нужно не просто id */
                 $this->_redirect('/');
             } catch (Axioma\Exception $e) {
                 $this->view->errorMessage = $e->getMessage();
@@ -36,6 +37,7 @@ class LoginController extends Zend_Controller_Action {
 
     public function logoutAction() {
         Zend_Auth::getInstance()->clearIdentity();
+        setcookie('auth_id', Zend_Auth::getInstance()->getIdentity()->id, time()-1);
         $this->_redirect('/login');
     }
 }
