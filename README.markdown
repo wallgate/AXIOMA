@@ -1,2 +1,2 @@
-This is a repo for an AXIOMA bug tracker
+This is an official repo for an AXIOMA bug tracker
 
